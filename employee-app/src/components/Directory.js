@@ -1,11 +1,44 @@
 import React, { useState, useEffect } from "react";
 function Directory() {
     const [directory, setDirectory] = useState([])
+    var clicked = false;
+    function handleClick(event){
+        event.preventDefault();
+        if(event.target.textContent === "Name"){
 
-    // function handleClick(event){
-    //     event.preventDefault();
+            organizeByName();
+        }
+        else if(event.target.textContent === "Phone"){
+            console.log("yes")
+        }
+        else if(event.target.textContent === "Email"){
+            console.log("yes")
+        }
+        else if(event.target.textContent === "DOB"){
+            console.log("yes")
+        }
+    }
 
-    // }
+    function organizeByName() {
+        var newArray = [];
+        for(var i=0; i<directory.length; i++){
+            newArray.push(directory[i].name)
+        }
+        newArray = newArray.sort();
+        var newerArray = [];
+        for(var i=0; i<newArray.length; i++){
+            for(var j=0; j<directory.length; j++){
+                if(newArray[i] === directory[j].name){
+                    newerArray.push(directory[j])
+                }
+            }
+        }
+        if(clicked){
+            
+        }
+        setDirectory(newerArray);
+    }
+
     function loadPeople() {
         var array = []
         array.push({ image: "ash.jpg", name: "Ash Ketchum", phone: 4152007568, email: "ash@pokemon.com", dob: 19990702 })
@@ -20,7 +53,6 @@ function Directory() {
         array.push({ image: "james.jpg", name: "James", phone: 1232343454, email: "james@pokemon.com", dob: 19601202 })
         array.push({ image: "arbok.jpg", name: "Arbok", phone: 1111111111, email: "arboc@pokemon.com", dob: 20000202 })
         array.push({ image: "weezing.jpg", name: "Weezing", phone: 9999999999, email: "weezing@pokemon.com", dob: 20000303 })
-        console.log(array)
         setDirectory(array)
     }
 
@@ -35,11 +67,11 @@ function Directory() {
             <table className="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th scope="col">Picture</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">DOB</th>
+                        <th onClick = {handleClick} scope="col">Picture</th>
+                        <th onClick = {handleClick} scope="col">Name</th>
+                        <th onClick = {handleClick} scope="col">Phone</th>
+                        <th onClick = {handleClick} scope="col">Email</th>
+                        <th onClick = {handleClick} scope="col">DOB</th>
                     </tr>
                 </thead>
                 <tbody>
