@@ -1,48 +1,121 @@
 import React, { useState, useEffect } from "react";
 function Directory() {
     const [directory, setDirectory] = useState([])
-    const [clicked, setClicked] = useState(false)
-    function handleClick(event){
+    const [clicked, setClicked] = useState({ name: false, phone: false, email: false, dob: false })
+    function handleClick(event) {
         event.preventDefault();
-        if(event.target.textContent === "Name"){
-
+        if (event.target.textContent === "Name") {
             organizeByName();
         }
-        else if(event.target.textContent === "Phone"){
-            console.log("yes")
+        else if (event.target.textContent === "Phone") {
+            organizeByPhone();
         }
-        else if(event.target.textContent === "Email"){
-            console.log("yes")
+        else if (event.target.textContent === "Email") {
+            organizeByEmail();
         }
-        else if(event.target.textContent === "DOB"){
-            console.log("yes")
+        else if (event.target.textContent === "DOB") {
+            organizeByDOB();
         }
     }
 
     function organizeByName() {
         var newArray = [];
-        for(var i=0; i<directory.length; i++){
+        for (var i = 0; i < directory.length; i++) {
             newArray.push(directory[i].name)
         }
         newArray = newArray.sort();
         var newerArray = [];
-        for(var i=0; i<newArray.length; i++){
-            for(var j=0; j<directory.length; j++){
-                if(newArray[i] === directory[j].name){
+        for (var i = 0; i < newArray.length; i++) {
+            for (var j = 0; j < directory.length; j++) {
+                if (newArray[i] === directory[j].name) {
                     newerArray.push(directory[j])
                 }
             }
         }
-        
-        if(clicked){
+
+        if (clicked.name) {
             setDirectory(newerArray.reverse());
-            setClicked(false);
+            setClicked({ ...clicked, name: false });
         }
-        else{
+        else {
             setDirectory(newerArray);
-            setClicked(true);
+            setClicked({ ...clicked, name: true });
+        }
+    }
+
+    function organizeByEmail() {
+        var newArray = [];
+        for (var i = 0; i < directory.length; i++) {
+            newArray.push(directory[i].email)
+        }
+        newArray = newArray.sort();
+        var newerArray = [];
+        for (var i = 0; i < newArray.length; i++) {
+            for (var j = 0; j < directory.length; j++) {
+                if (newArray[i] === directory[j].email) {
+                    newerArray.push(directory[j])
+                }
+            }
         }
 
+        if (clicked.email) {
+            setDirectory(newerArray.reverse());
+            setClicked({ ...clicked, email: false });
+        }
+        else {
+            setDirectory(newerArray);
+            setClicked({ ...clicked, email: true });
+        }
+    }
+
+    function organizeByDOB() {
+        var newArray = [];
+        for (var i = 0; i < directory.length; i++) {
+            newArray.push(directory[i].dob)
+        }
+        newArray = newArray.sort();
+        var newerArray = [];
+        for (var i = 0; i < newArray.length; i++) {
+            for (var j = 0; j < directory.length; j++) {
+                if (newArray[i] === directory[j].dob) {
+                    newerArray.push(directory[j])
+                }
+            }
+        }
+
+        if (clicked.dob) {
+            setDirectory(newerArray.reverse());
+            setClicked({ ...clicked, dob: false });
+        }
+        else {
+            setDirectory(newerArray);
+            setClicked({ ...clicked, dob: true });
+        }
+    }
+
+    function organizeByPhone() {
+        var newArray = [];
+        for (var i = 0; i < directory.length; i++) {
+            newArray.push(directory[i].phone)
+        }
+        newArray = newArray.sort();
+        var newerArray = [];
+        for (var i = 0; i < newArray.length; i++) {
+            for (var j = 0; j < directory.length; j++) {
+                if (newArray[i] === directory[j].phone) {
+                    newerArray.push(directory[j])
+                }
+            }
+        }
+
+        if (clicked.phone) {
+            setDirectory(newerArray.reverse());
+            setClicked({ ...clicked, phone: false });
+        }
+        else {
+            setDirectory(newerArray);
+            setClicked({ ...clicked, phone: true });
+        }
     }
 
     function loadPeople() {
@@ -69,22 +142,21 @@ function Directory() {
     return (
         <div>
             <h1>Directory</h1>
-
             <table className="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th onClick = {handleClick} scope="col">Picture</th>
-                        <th onClick = {handleClick} scope="col">Name</th>
-                        <th onClick = {handleClick} scope="col">Phone</th>
-                        <th onClick = {handleClick} scope="col">Email</th>
-                        <th onClick = {handleClick} scope="col">DOB</th>
+                        <th onClick={handleClick} scope="col">Picture</th>
+                        <th onClick={handleClick} scope="col">Name</th>
+                        <th onClick={handleClick} scope="col">Phone</th>
+                        <th onClick={handleClick} scope="col">Email</th>
+                        <th onClick={handleClick} scope="col">DOB</th>
                     </tr>
                 </thead>
                 <tbody>
                     {directory.map(person => {
                         return (
-                            <tr key = {person.name}>
-                                <td><img src = {require('../images/' + person.image)} style = {{height: "150px", width:  "150px"}}></img></td>
+                            <tr key={person.name}>
+                                <td><img src={require('../images/' + person.image)} style={{ height: "150px", width: "150px" }}></img></td>
                                 <td>{person.name}</td>
                                 <td>{person.phone}</td>
                                 <td>{person.email}</td>
@@ -96,7 +168,6 @@ function Directory() {
             </table>
         </div>
     )
-
 }
 
 export default Directory;
