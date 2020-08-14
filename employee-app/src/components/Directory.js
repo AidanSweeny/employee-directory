@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 function Directory() {
     const [directory, setDirectory] = useState([])
-    var clicked = false;
+    const [clicked, setClicked] = useState(false)
     function handleClick(event){
         event.preventDefault();
         if(event.target.textContent === "Name"){
@@ -33,10 +33,16 @@ function Directory() {
                 }
             }
         }
+        
         if(clicked){
-            
+            setDirectory(newerArray.reverse());
+            setClicked(false);
         }
-        setDirectory(newerArray);
+        else{
+            setDirectory(newerArray);
+            setClicked(true);
+        }
+
     }
 
     function loadPeople() {
