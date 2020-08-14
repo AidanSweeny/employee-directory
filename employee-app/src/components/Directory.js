@@ -137,6 +137,39 @@ function Directory() {
         inputRef.current.value = "";
     }
 
+    function formatDate(date) {
+        var string = "";
+        date = JSON.stringify(date)
+        for(var i=0; i<date.length; i++){
+            if(i === 4){
+                string += "-";
+            }
+            if(i === 6){
+                string += "-";
+            }
+            string += date[i];
+        }
+        return string;
+    }
+
+    function formatPhone(phone) {
+        var string = "";
+        phone = JSON.stringify(phone)
+        for(var i=0; i<phone.length; i++){
+            if(i === 0){
+                string += "(";
+            }
+            if(i === 3){
+                string += ")-";
+            }
+            if(i === 6){
+                string += "-"
+            }
+            string += phone[i];
+        }
+        return string;
+    }
+
     function loadPeople() {
         var array = []
         array.push({ image: "ash.jpg", name: "Ash Ketchum", phone: 4152007568, email: "ash@pokemon.com", dob: 19990702 })
@@ -184,9 +217,9 @@ function Directory() {
                             <tr key={person.name}>
                                 <td><img src={require('../images/' + person.image)} style={{ height: "150px", width: "150px" }}></img></td>
                                 <td>{person.name}</td>
-                                <td>{person.phone}</td>
+                                <td>{formatPhone(person.phone)}</td>
                                 <td>{person.email}</td>
-                                <td>{person.dob}</td>
+                                <td>{formatDate(person.dob)}</td>
                             </tr>
                         )
                     })}
