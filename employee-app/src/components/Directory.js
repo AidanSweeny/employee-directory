@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 function Directory() {
     const [directory, setDirectory] = useState([])
     const [clicked, setClicked] = useState({ name: false, phone: false, email: false, dob: false })
+    const inputRef = useRef();
+
     function handleClick(event) {
+        console.log("yes")
         event.preventDefault();
         if (event.target.textContent === "Name") {
             organizeByName();
@@ -118,6 +121,22 @@ function Directory() {
         }
     }
 
+    function handleChange() {
+        var search = [];
+        for (var i = 0; i < directory.length; i++) {
+            var searchName = directory[i].name.toLowerCase();
+            if (searchName.includes(inputRef.current.value.toLowerCase())) {
+                search.push(directory[i]);
+            }
+        }
+        setDirectory(search);
+    }
+
+    function handleClear() {
+        loadPeople();
+        inputRef.current.value = "";
+    }
+
     function loadPeople() {
         var array = []
         array.push({ image: "ash.jpg", name: "Ash Ketchum", phone: 4152007568, email: "ash@pokemon.com", dob: 19990702 })
@@ -141,15 +160,22 @@ function Directory() {
 
     return (
         <div>
-            <h1>Directory</h1>
+            <div className ="jumbotron bg-info">
+                <div className ="container">
+                    <h1>Employee Directory</h1>
+                </div>
+            </div>
+            <div className = "input-group mb-3">
+                <input onChange = {handleChange} type = "text" className = "form-control"placeholder="Search by Name" ref={inputRef}></input><button className = "btn btn-outline-secondary" onClick={handleClear}>clear</button>
+            </div>
             <table className="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th onClick={handleClick} scope="col">Picture</th>
-                        <th onClick={handleClick} scope="col">Name</th>
-                        <th onClick={handleClick} scope="col">Phone</th>
-                        <th onClick={handleClick} scope="col">Email</th>
-                        <th onClick={handleClick} scope="col">DOB</th>
+                        <th style =  {{cursor: "pointer"}} onClick={handleClick} scope="col">Picture</th>
+                        <th style =  {{cursor: "pointer"}} onClick={handleClick} scope="col">Name</th>
+                        <th style =  {{cursor: "pointer"}}  onClick={handleClick} scope="col">Phone</th>
+                        <th style =  {{cursor: "pointer"}} onClick={handleClick} scope="col">Email</th>
+                        <th style =  {{cursor: "pointer"}} onClick={handleClick} scope="col">DOB</th>
                     </tr>
                 </thead>
                 <tbody>
